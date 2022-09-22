@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>quanlyxe</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./baikt2.css">
+    
+</head>
+<body>
+    <div class="qlx">
+        <div class="column" >
+            <div class="column11">
+                Nhập Thông Tin Xe Cộ
+            </div>
+            <div>
+                
+                    <label for="Tên Xe">Tên Xe <span>*</span>:</label>
+                    <input  id="tx" type="text">
+                
+                    <label for="Hình Ảnh">Hình Ảnh :</label>
+                    <input id="ha" type="text">
+                    <label for="">Hãng Xe <span>*</span>:</label>
+                    <select name="" id="hx" > 
+                        <optgroup >
+                            <option value="-- Hãng Xe --">-- Hãng Xe --</option>
+                        </optgroup>
+                        <optgroup class="opt" label="Swedish Cars">
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                          </optgroup>
+                          <optgroup class="opt" label="German Cars">
+                            <option value="mercedes">Mercedes</option>
+                            <option value="audi">Audi</option>
+                          </optgroup>
+                    </select>
+                    <label for="">Giá Tiền <span>*</span>:</label>
+                    <input type="number" name="" id="gt">
+                    <label for="">Mô Tả:</label>
+                    <textarea name="" id="mt" cols="30" rows="10"></textarea>
+                    <label for="">Người Liên Hệ <span>*</span>:</label>
+                    <input id="nlh" type="text">
+                    <label for="">Số Điện Thoại Người Liên Hệ <span>*</span>:</label>
+                    <input id="sdt" type="text">
+                    <label for="">Email <span>*</span>:</label>
+                    <input type="email" name="" id="email">
+                    <button class="bt1" onclick="addRow()">Lưu</button>
+                    <button class="bt2" onclick="rRow()">Xoá</button>
+
+            </div>
+        </div>
+        <div class="column2">
+           
+            <div class="column11">
+                Quản Lý Danh Sách Xe Cộ
+            </div>
+            <input class="ip" type="search" placeholder="   Tìm Kiếm ...">
+            <table id="table">
+                <tr>
+                    <th>STT</th>
+                    <th>Hình Ảnh</th>
+                    <th>Tên Xe</th>
+                    <th>Hãng Xe</th>
+                    <th>Giá Tiền</th>
+                    <th>Người Liên Hệ</th>
+                    <th>Điện Thoại</th>
+                    <th>Email</th>
+                    
+                </tr>
+            </table>
+        </div>
+    </div>
+    <table hidden border="1">
+        <tr>
+            <th>
+                <td id="datamt"></td>
+            </th>
+        </tr>
+    </table>
+    <script>
+        var jvs,
+        table = document.getElementById("table");
+        var stt = 1;
+
+        function checkEmptyInput()
+        {
+            var isEmpty = false
+            var tenXe = document.getElementById('tx').value;
+            var giaTien = document.getElementById('gt').value;
+            var nguoiLienhe = document.getElementById('nlh').value;
+            var sdt = document.getElementById('sdt').value;
+            var email = document.getElementById('email').value;
+            var kt_sdt=/\+84[0-9]{8,}$/;
+            var kt_email = /^[a-zA-Z0-9].*(@gmail.com)$/;
+        if(tenXe === ""){
+            alert("Hãy thêm tên xe");
+            isEmpty = true;
+        }
+        else if(giaTien <= 0)
+        {
+            alert("Giá tiền phải dương");
+            isEmpty = true;
+        }
+
+        else if(nguoiLienhe === "")
+        {
+            alert("Hãy thêm người liên hệ");
+            isEmpty = true;
+        }
+        else if(kt_sdt.test(sdt)==false)
+        {
+    		alert("Số điện thoại bắt đầu từ +84 và nhiều hơn 9 số");
+            isEmpty = true;
+
+        }
+        else if(kt_email.test(email)==false)
+        {
+            alert("Email phải có đuôi là @gmail.com");
+            isEmpty = true;
+        }
+        return isEmpty;
+        }
+
+
+        function addRow()
+        {
+
+        if(!checkEmptyInput()){
+        var newRow = table.insertRow(table.length),
+        cell0 = newRow.insertCell(0),
+        cell1 = newRow.insertCell(1),
+        cell2 = newRow.insertCell(2),
+        cell3 = newRow.insertCell(3),
+        cell4 = newRow.insertCell(4),
+        cell5 = newRow.insertCell(5),
+        cell6 = newRow.insertCell(6),
+        cell7 = newRow.insertCell(7),            
+        tenXe = document.getElementById('tx').value,
+        hinhAnh = document.getElementById('ha').value,
+        hangXe = document.getElementById('hx').value,
+        giaTien = document.getElementById('gt').value,
+        moTa = document.getElementById('mt').value,
+        nguoiLienhe = document.getElementById('nlh').value,
+        sdt = document.getElementById('sdt').value,
+        email = document.getElementById('email').value
+ 
+        cell0.innerHTML = stt; 
+        stt++;    
+        cell1.innerHTML = "<img src=\"" + hinhAnh + "\"" + "style=\'max-height:50px;\'>";
+        cell2.innerHTML = tenXe;
+        cell3.innerHTML = hangXe;
+        cell4.innerHTML = giaTien;
+        cell5.innerHTML = nguoiLienhe;
+        cell6.innerHTML = sdt;
+        cell7.innerHTML = email;
+
+
+
+        document.getElementById("ha").value = "";
+        document.getElementById("mt").value="";
+        document.getElementById("gt").value="";
+        document.getElementById("tx").value = "";
+        document.getElementById("hx").value = "";
+        document.getElementById("nlh").value = "";
+        document.getElementById("sdt").value = "";
+        document.getElementById("email").value = "";
+        
+        document.getElementById("datamt").innerHTML=moTa;
+
+        selectedRowToInput();
+        }
+        }
+
+
+        function selectedRowToInput()
+        {
+
+        for(var i = 1; i < table.rows.length; i++)
+        {
+            table.rows[i].onclick = function()
+            {
+        
+            jvs = this.rowIndex;
+            document.getElementById("ha").value = this.cells[1].innerHTML;
+            document.getElementById("tx").value = this.cells[2].innerHTML;
+            document.getElementById("hx").value = this.cells[3].innerHTML;
+            document.getElementById("gt").value = this.cells[4].innerHTML;
+            document.getElementById("nlh").value = this.cells[5].innerHTML;
+            document.getElementById("sdt").value = this.cells[6].innerHTML;
+            document.getElementById("email").value = this.cells[7].innerHTML;
+            document.getElementById("mt").value=document.getElementById("datamt").innerHTML;
+            };
+        }
+        }
+        selectedRowToInput();
+
+        function rRow()
+        {
+            table.deleteRow(jvs);
+
+            document.getElementById("ha").value = "";
+            document.getElementById("tx").value = "";
+            document.getElementById("hx").value = "";
+            document.getElementById("gt").value = "";
+            document.getElementById("nlh").value = "";
+            document.getElementById("sdt").value = "";
+            document.getElementById("email").value = "";
+            
+        }
+
+    </script>
+</body>
+</html>
